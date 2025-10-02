@@ -1,0 +1,21 @@
+#!/bin/bash
+# Save as setup.sh, then: chmod +x setup.sh && ./setup.sh
+
+echo "🚀 Starting VPS Setup..."
+apt update && apt upgrade -y
+apt install python3 python3-pip git -y
+git clone https://github.com/PRIME-X-ARMY/cloudways-bot.git /opt/cloudways-bot
+cd /opt/cloudways-bot
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+apt install nodejs -y
+npm install pm2 -g
+pm2 start main.py --name cloudways-bot --interpreter venv/bin/python3
+pm2 startup
+pm2 save
+echo "✅ Setup Complete! Bot is running."
+
+# Ek hi command mein sab setup ho jayega
+cd ~ && git clone https://github.com/PRIME-X-ARMY/cloudways-bot.git && cd cloudways-bot && pkg install python git chromium -y && pip install python-telegram-bot selenium webdriver-manager && mkdir utils && python main.py
